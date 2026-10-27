@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="Assets/windowtab-logo.png" width="128" alt="Logo WindowTab liquid glass" />
+  <img src="Assets/windowtab-logo.png" width="128" alt="WindowTab liquid-glass logo" />
 </p>
 
 <h1 align="center">WindowTab</h1>
 
-<p align="center"><strong>Chuyển cửa sổ cũng xứng đáng được mượt.</strong></p>
+<p align="center"><strong>Make every window switch feel right.</strong></p>
 
-<p align="center">Một cú vuốt ba ngón. Cửa sổ thu nhỏ, lướt sang bên, rồi mở rộng vào đúng nhịp làm việc của bạn.</p>
+<p align="center">Three fingers. One fluid transition. Move between your windows with a little more flow.</p>
 
 <p align="center">
   <a href="https://github.com/nguyenquocan0101/WindowTab/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/nguyenquocan0101/WindowTab?style=flat-square&amp;color=3063dd" /></a>
@@ -16,116 +16,126 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/nguyenquocan0101/WindowTab/releases/latest/download/WindowTab-win-x64.zip"><strong>Tải WindowTab cho Windows x64 ↓</strong></a>
-  &nbsp; · &nbsp; <a href="#quick-start">Bắt đầu sử dụng</a>
-  &nbsp; · &nbsp; <a href="docs/quick-start.en.md">English quick start</a>
+  <a href="https://github.com/nguyenquocan0101/WindowTab/releases/latest/download/WindowTab-win-x64.zip"><strong>Download for Windows x64 ↓</strong></a>
+  &nbsp; · &nbsp; <a href="#quick-start">Get started</a>
+  &nbsp; · &nbsp; <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
 ---
 
-## Một khoảng thở giữa những cửa sổ
+## A little more flow between the windows you work in
 
-Bạn đang đọc tài liệu, viết vài dòng code, rồi quay lại cuộc trò chuyện. Những lần đổi cửa sổ diễn ra cả ngày. WindowTab dành một chút chăm chút cho chính những khoảnh khắc nhỏ ấy.
+From docs to code, from a conversation back to the task at hand: switching windows is part of the work. WindowTab gives those small moments a little more attention.
 
-Lấy cảm hứng từ cảm giác chuyển cảnh trên MacBook, WindowTab mang một nhịp chuyển **thu nhỏ → trượt → phóng lớn** lên Windows. App ở khay hệ thống, nhận hai phím tắt được gán vào touchpad và đưa bạn đi tuần tự qua các cửa sổ đang mở.
+Inspired by the feel of MacBook transitions, WindowTab brings a **shrink → slide → zoom** rhythm to Windows. It lives in your system tray, receives two shortcuts mapped to your touchpad, and moves you through your open windows in order.
 
-<img src="docs/assets/windowtab-flow.svg" width="100%" alt="Minh họa chuyển động WindowTab: thu nhỏ, trượt, phóng lớn" />
+<img src="docs/assets/windowtab-flow.svg" width="100%" alt="Illustration of WindowTab's shrink, slide and zoom transition" />
 
-<p align="center"><sub>Minh họa ba giai đoạn chuyển cảnh. Taskbar đứng yên để góc làm việc vẫn có một điểm tựa quen thuộc.</sub></p>
+<p align="center"><sub>A three-stage transition, with a stationary taskbar to keep your workspace grounded.</sub></p>
 
-## Những chi tiết làm nên cảm giác
+## Small details. A better feel.
 
-| Điều bạn muốn | WindowTab chăm chút thế nào |
+| What you want | How WindowTab delivers |
 |---|---|
-| **Chuyển cửa sổ có nhịp** | Preview thu nhỏ còn 84%, trượt ngang, rồi phóng về đúng kích thước cửa sổ đích. |
-| **Biết mình đang ở đâu** | Danh sách giữ thứ tự ổn định trong phiên chạy; cửa sổ mới được thêm vào, cửa sổ đã đóng được bỏ đi. |
-| **Chạm cuối là nhận ra** | Ở hai đầu danh sách, preview đi khoảng 20% rồi bật lại. Không quay vòng về cửa sổ đầu. |
-| **Taskbar luôn quen thuộc** | Vùng chuyển cảnh nằm trong work area của màn hình, để taskbar đứng yên. |
-| **Nhịp chuyển hợp tay mình** | Chỉnh thời lượng và chống lặp bằng ô số, thanh kéo hoặc bàn phím; xem thử ngay trong Cài đặt. |
-| **Desktop xuất hiện khi bạn muốn** | Mặc định dừng ở cửa sổ ứng dụng cuối. Có công tắc thêm Desktop ở cuối danh sách. |
-| **Mở máy là sẵn sàng** | Tùy chọn khởi động cùng Windows, với cấu hình riêng cho tài khoản của bạn. |
+| **A transition with rhythm** | The preview shrinks to 84%, slides horizontally, then expands to the destination window's original bounds. |
+| **A sense of where you are** | Window order stays stable during a session. New windows join the list; closed windows leave it. |
+| **An edge you can feel** | At either end, the preview travels about 20% and springs back. The list does not wrap around. |
+| **A familiar taskbar** | The overlay stays inside the monitor's work area, leaving the taskbar stationary. |
+| **Timing that suits your hands** | Adjust duration and cooldown with synchronized numeric fields, sliders or keyboard input. Try the effect inside Settings. |
+| **Desktop on your terms** | Stop at the last application window by default, or enable an optional Desktop entry at the end. |
+| **Ready when you sign in** | Optional Windows startup, with settings saved for your own user account. |
 
-**Giao diện cũng được chăm chút:** logo liquid glass, bốn tab rõ ràng, nút Lưu/Hủy cố định, thanh kéo cobalt và ô nhập thời gian đồng bộ.
+**The interface gets the same care:** a liquid-glass logo, four organized settings tabs, fixed Save/Cancel actions, cobalt sliders and matching timing fields.
 
 <a id="quick-start"></a>
 
-## Bắt đầu sử dụng
+## Get started
 
-### Bạn cần
+### What you need
 
-**Windows 11 x64** và touchpad hỗ trợ gán **Custom shortcut** cho vuốt ba ngón. Khả năng này phụ thuộc driver; một số cử chỉ chỉ hoạt động với Precision Touchpad. [Microsoft giải thích thêm tại đây.](https://support.microsoft.com/en-us/windows/hardware/input-devices/touch-gestures-for-windows)
+**Windows 11 x64** and a touchpad driver that supports assigning a **Custom shortcut** to three-finger swipes. Support depends on your driver; some gestures require a Precision Touchpad. [See Microsoft's gesture guide.](https://support.microsoft.com/en-us/windows/hardware/input-devices/touch-gestures-for-windows)
 
-Gói tải sẵn đã kèm .NET runtime. Bạn không cần cài SDK hay tự build.
+The download bundles its .NET runtime, so you can use the app without installing an SDK or building it yourself.
 
-### Tải, gán phím, rồi vuốt
+> **The app UI is currently Vietnamese.** The instructions below include the exact labels you will see, with English explanations.
 
-1. **[Tải ZIP từ Releases](https://github.com/nguyenquocan0101/WindowTab/releases/latest/download/WindowTab-win-x64.zip)** và giải nén toàn bộ vào một thư mục cố định.
-2. **Chạy `Start-WindowTab.cmd`** để mở app và Cài đặt lần đầu. Các lần sau có thể dùng `WindowTab.exe`; icon khay hệ thống có menu **Cài đặt…**, **Tạm dừng gesture**, **Thoát**.
-3. **Trong tab Cử chỉ, đọc hai phím tắt đang hiển thị.** Bản cài mới dùng:
+### Download, map, swipe
 
-   | Vuốt | Phím tắt mặc định |
+1. **[Download the ZIP from Releases](https://github.com/nguyenquocan0101/WindowTab/releases/latest/download/WindowTab-win-x64.zip)** and extract the entire archive into a permanent folder.
+2. **Run `Start-WindowTab.cmd`** to start the app and open Settings on first launch. You can also run `WindowTab.exe`, then use its tray icon: **Cài đặt…** means Settings, **Tạm dừng gesture** means Pause gestures, and **Thoát** means Exit.
+3. **Read the shortcuts in the Cử chỉ (Gestures) tab.** A fresh installation uses:
+
+   | Swipe | Default shortcut |
    |---|---|
-   | Trái → cửa sổ kế tiếp | `Ctrl + Alt + Shift + F8` |
-   | Phải → cửa sổ trước | `Ctrl + Alt + Shift + F10` |
+   | Left → next window | `Ctrl + Alt + Shift + F8` |
+   | Right → previous window | `Ctrl + Alt + Shift + F10` |
 
-4. **Giữ Cài đặt WindowTab mở**, bấm **Mở cài đặt Touchpad**. Trong Windows, vào **Bluetooth & devices → Touchpad → Advanced gestures**. Đặt **Swipe left/right → Custom shortcut**, chọn **Start recording**, nhấn đúng tổ hợp tương ứng, rồi **Stop recording**.
-5. **Trở về và đóng Cài đặt WindowTab**; bấm **Lưu thay đổi** nếu bạn đã chỉnh gì. Mở ít nhất hai cửa sổ không thu nhỏ trên cùng màn hình và thử vuốt trái, rồi vuốt phải để quay về.
+4. **Keep WindowTab Settings open** and click **Mở cài đặt Touchpad** (Open Touchpad settings). In Windows, go to **Bluetooth & devices → Touchpad → Advanced gestures**. Set **Swipe left/right → Custom shortcut**, choose **Start recording**, press the corresponding chord, then **Stop recording**.
+5. **Return to WindowTab and close Settings.** If you changed anything, click **Lưu thay đổi** (Save changes). Open at least two non-minimized application windows on the same monitor, then swipe left to advance and right to return.
 
-> **Nhớ đóng Cài đặt trước khi vuốt.** WindowTab tạm nhả phím tắt trong lúc cửa sổ này mở để bạn có thể ghi lại tổ hợp trong Windows.
+> **Close WindowTab Settings before trying a gesture.** Global shortcuts are temporarily released while that dialog is open so Windows can record the chords.
 
-Ngay sau khi khởi chạy, cửa sổ hiện tại là đầu danh sách; vuốt phải lúc đó có thể chỉ bật lại ở biên. Hãy đi tiếp bằng vuốt trái trước.
+The current window starts at the beginning of the list. An initial right swipe may therefore rebound at the edge; swipe left to advance first.
 
-**[Xem hướng dẫn từng bước, xử lý lỗi và cập nhật app →](docs/getting-started.md)**
+Existing users keep their saved bindings. Always match the shortcuts actually displayed in the app.
 
-## Chọn nhịp làm việc của bạn
+**[English quick-start reference →](docs/quick-start.en.md)** · [Detailed Vietnamese setup guide](docs/getting-started.md)
 
-| Tab | Bạn có thể làm gì? |
+## Find your rhythm
+
+| Settings tab | What it controls |
 |---|---|
-| **Cử chỉ** | Đổi hai phím tắt, mở thiết lập touchpad của Windows. |
-| **Chuyển động** | Xem thử hiệu ứng; chỉnh thời lượng **100–600 ms**, chống lặp **0–1000 ms**. |
-| **Ứng dụng** | Bật chạy cùng Windows, chọn có thêm Desktop hay không, xem trạng thái kết nối. |
-| **Hướng dẫn** | Đọc cách thiết lập ngay trong app. |
+| **Cử chỉ · Gestures** | The two trigger shortcuts and access to Windows Touchpad settings. |
+| **Chuyển động · Motion** | Interactive preview, **100–600 ms** animation duration and **0–1000 ms** cooldown. |
+| **Ứng dụng · Application** | Windows startup, the optional Desktop entry and connection status. |
+| **Hướng dẫn · Help** | Setup instructions inside the app. |
 
-Thích phản hồi gọn? Thử **220–300 ms**, chống lặp **100–150 ms**. Muốn nhìn rõ từng giai đoạn? Thử **500–600 ms**, chống lặp **200–250 ms**. Bạn có thể đổi lại bất cứ lúc nào; **Hủy** bỏ chỉnh sửa chưa lưu.
+For a quick, compact feel, try **220–300 ms** with a **100–150 ms** cooldown. For a slower transition that gives each stage more room, try **500–600 ms** with a **200–250 ms** cooldown. You can adjust these at any time; **Hủy** (Cancel) discards unsaved edits.
 
-## Hiểu đúng trải nghiệm
+## Know what to expect
 
-- **Đối tượng chuyển:** các cửa sổ ứng dụng như trình duyệt, editor, Discord, File Explorer. Tab bên trong trình duyệt và Windows virtual desktops có cơ chế riêng.
-- **Cử chỉ:** Windows/driver nhận dạng thao tác và gửi phím tắt. WindowTab chưa có driver touchpad riêng; chống lặp không thay đổi quãng đường vuốt vật lý.
-- **Độ mượt:** bộ hẹn giờ độ phân giải cao nhắm tới **60 lần cập nhật/giây**, giữ tối đa một khung hình giao diện chờ xử lý. FPS hiển thị thực tế còn tùy màn hình, GPU, ứng dụng và tải hệ thống.
-- **Phạm vi:** các cửa sổ hiển thị, không thu nhỏ, trên cùng màn hình. Một số cửa sổ được bảo vệ hoặc chạy ở mức quyền khác có thể từ chối preview/focus.
-- **Cách dựng hình:** lớp phủ 2D dùng live preview của DWM. Nó không thay đổi trình quản lý cửa sổ hay cài thêm compositor cho Windows.
+- **What moves:** application windows such as your browser, editor, Discord or File Explorer. Browser-internal tabs and Windows virtual desktops have their own behavior.
+- **How gestures arrive:** Windows and the touchpad driver recognize your swipe and send the mapped shortcut. WindowTab does not install a touchpad driver, and cooldown does not change the physical swipe-distance threshold.
+- **Update cadence:** a high-resolution timer targets **60 UI updates per second**, with at most one UI frame queued. Actual display presentation FPS depends on your monitor, GPU, applications and system load.
+- **Which windows qualify:** visible, non-minimized windows on the same monitor. Protected windows or those running at a different privilege level may reject previews or focus changes.
+- **How the effect is drawn:** an app-owned 2D overlay using live DWM previews. It does not replace the Windows window manager or install a separate desktop compositor.
 
-Nếu một cửa sổ không cho nhận focus, WindowTab trả preview về cửa sổ đang dùng. Nếu preview không khả dụng, app sẽ thử chuyển trực tiếp.
+If Windows refuses focus, the preview returns to the window you were using. If a preview is unavailable, WindowTab attempts a direct switch.
 
-## Cấu hình ở lại trên máy của bạn
+## Your workspace stays on your machine
 
-App không có tài khoản hoặc máy chủ xử lý hình ảnh. Preview được dựng tại máy bằng DWM; cấu hình và nhật ký nằm trong:
+The app has no account system or image-processing server. DWM renders the previews locally, and configuration and diagnostics are stored in:
 
 ```text
 %LOCALAPPDATA%\WindowTab\settings.json
 %LOCALAPPDATA%\WindowTab\diagnostics.log
 ```
 
-Nhật ký ghi mã trạng thái, số lượng cửa sổ và nhịp cập nhật; không ghi tên hay nội dung cửa sổ. Cập nhật phiên bản giữ lại cài đặt đã lưu.
+Diagnostics record status codes, window counts and update timing. They do not record window titles or contents. Updates preserve your saved settings.
 
-## Khi một cú vuốt chưa như ý
+## When a swipe needs a little help
 
-| Hiện tượng | Kiểm tra trước tiên |
+| What happens | Check this first |
 |---|---|
-| Không chuyển / có tiếng báo | Đóng Cài đặt; kiểm tra Custom shortcut trong Windows khớp hai tổ hợp trong app và đã bấm Stop recording. |
-| Chỉ một phía bật trở lại | Có thể bạn đang ở đầu/cuối danh sách; thử phía còn lại. |
-| Nhấn phím được, vuốt chưa được | Kiểm tra mapping và driver touchpad trong Windows. |
-| Không thấy icon app | Mở vùng icon ẩn ở khay hệ thống; app chỉ chạy một phiên. |
-| Không có Custom shortcut | Driver có thể chưa hỗ trợ; thử chức năng chuyển cửa sổ bằng bàn phím. |
+| Nothing switches, or you hear a notification sound | Close Settings. Check that Windows Custom shortcuts match the app and that you clicked Stop recording. |
+| One direction only rebounds | You may be at the first or last window. Try the other direction. |
+| Keyboard shortcuts work, but swipes do not | Check your Windows gesture mapping and touchpad driver. |
+| You cannot find the app | Look in the hidden tray icons. WindowTab intentionally runs as a single instance. |
+| Custom shortcut is missing | Your driver may not support it. You can still try window switching with the keyboard shortcuts. |
 
-Vẫn chưa đúng? [Mở một issue](https://github.com/nguyenquocan0101/WindowTab/issues) kèm phiên bản Windows, touchpad và các bước tái hiện. Phản hồi từ thêm nhiều mẫu máy sẽ giúp những cú vuốt ngày càng tốt hơn.
+Still not right? [Open an issue](https://github.com/nguyenquocan0101/WindowTab/issues) with your Windows version, touchpad model and reproduction steps. Feedback from more devices helps make the next swipe better.
+
+## Update or remove
+
+**To update:** exit WindowTab from its tray menu, extract the new version into your app folder, then start it again. Saved settings remain in LocalAppData. If you move the app while Windows startup is enabled, launch the new copy to refresh its startup path.
+
+**To remove:** disable **Khởi động cùng Windows** (Start with Windows), exit the app, then remove the extracted app folder. Configuration and diagnostics remain in `%LOCALAPPDATA%\WindowTab` unless you remove them separately.
 
 <a id="build"></a>
 
-## Dành cho người muốn tự build
+## Build it yourself
 
-Trên Windows với **.NET 10 SDK**:
+On Windows with the **.NET 10 SDK**:
 
 ```powershell
 git clone https://github.com/nguyenquocan0101/WindowTab.git
@@ -134,26 +144,26 @@ dotnet build .\WindowTab.csproj -c Release
 dotnet run --project .\WindowTab.csproj -- --settings
 ```
 
-Thoát phiên WindowTab đang chạy trước khi mở bản build khác. Để đóng gói bản x64 có runtime, hướng dẫn và thông báo bản quyền đi kèm:
+Exit an existing tray instance before starting another build. To package the Windows x64 app with its runtime, setup guide and license notices:
 
 ```powershell
 .\tools\Package-Release.ps1 -Version 0.1.0
 ```
 
-Kết quả là `dist/releases/WindowTab-win-x64.zip` và `SHA256SUMS.txt`. Quy trình Windows build trên GitHub cũng dùng chính script này.
+The output is `dist/releases/WindowTab-win-x64.zip` and `SHA256SUMS.txt`. The GitHub Windows build workflow uses this same script.
 
-Xem [CONTRIBUTING.md](CONTRIBUTING.md) nếu bạn muốn cải thiện gesture, animation, giao diện hoặc tài liệu.
+See [CONTRIBUTING.md](CONTRIBUTING.md) if you would like to improve gestures, animation, the interface or documentation.
 
-## Tải từ nguồn chính thức
+## Download from the official source
 
-Bản public đầu tiên chưa ký số. Hãy tải từ [Releases của repo này](https://github.com/nguyenquocan0101/WindowTab/releases) và đối chiếu `SHA256SUMS.txt` khi cần:
+The first public release is unsigned. Download from [this repository's Releases](https://github.com/nguyenquocan0101/WindowTab/releases) and compare the supplied `SHA256SUMS.txt` when needed:
 
 ```powershell
 Get-FileHash .\WindowTab-win-x64.zip -Algorithm SHA256
 ```
 
-WindowTab được phát hành theo **[MIT License](LICENSE)**. Các thông báo của runtime đi kèm nằm trong thư mục `licenses/` của ZIP; xem thêm [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). Logo liquid glass được tạo bằng image generation, với [prompt được lưu công khai](Assets/logo-prompt.md).
+WindowTab is distributed under the **[MIT License](LICENSE)**. Bundled runtime notices are included in the ZIP's `licenses/` directory; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The liquid-glass logo was created with image generation, with its [prompt available here](Assets/logo-prompt.md).
 
 ---
 
-<p align="center"><strong>Một chuyển động nhỏ. Một góc làm việc dễ chịu hơn.</strong><br />Nếu WindowTab hợp tay bạn, một ⭐ sẽ giúp người tiếp theo tìm thấy nó.</p>
+<p align="center"><strong>A small movement. A workspace that feels a little better.</strong><br />If WindowTab feels right in your hands, a ⭐ helps the next person find it.</p>
