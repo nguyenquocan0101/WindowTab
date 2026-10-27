@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+dist/
+artifacts/
+plans/
+tmp/
+.env
+.env.*
+*.pfx
+*.p12
+*.log
+*.sha256.local
