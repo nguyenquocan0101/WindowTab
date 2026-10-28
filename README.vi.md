@@ -137,7 +137,7 @@ dotnet run --project .\WindowTab.csproj -- --settings
 Thoát phiên WindowTab đang chạy trước khi mở bản build khác. Để đóng gói bản x64 có runtime, hướng dẫn và thông báo bản quyền đi kèm:
 
 ```powershell
-.\tools\Package-Release.ps1 -Version 0.1.0
+.\tools\Package-Release.ps1
 ```
 
 Kết quả là `dist/releases/WindowTab-win-x64.zip` và `SHA256SUMS.txt`. Quy trình Windows build trên GitHub cũng dùng chính script này.

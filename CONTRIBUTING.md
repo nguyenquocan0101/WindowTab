@@ -34,7 +34,7 @@ The repository currently has no committed automated test suite. The Windows buil
 ## Prepare a release package
 
 ```powershell
-.\tools\Package-Release.ps1 -Version 0.1.0
+.\tools\Package-Release.ps1
 ```
 
 This produces a self-contained ZIP and checksum under `dist/releases`, including the exact bundled runtimes' license files. Application source is licensed under MIT. See [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) for bundled components and branding provenance.

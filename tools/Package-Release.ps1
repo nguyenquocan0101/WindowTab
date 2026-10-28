@@ -1,11 +1,17 @@
 param(
-    [ValidatePattern('^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$')]
-    [string]$Version = '0.1.0',
+    [string]$Version = '',
     [string]$OutputDirectory = (Join-Path $PSScriptRoot '..\dist\releases')
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if ([string]::IsNullOrWhiteSpace($Version)) {
+    [xml]$project = Get-Content -LiteralPath (Join-Path $repoRoot 'WindowTab.csproj') -Raw
+    $Version = [string]$project.Project.PropertyGroup.Version
+}
+if ($Version -notmatch '^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$') {
+    throw "Invalid release version: $Version"
+}
 $outputRoot = [System.IO.Path]::GetFullPath($OutputDirectory)
 $stage = Join-Path $outputRoot ('staging-' + [Guid]::NewGuid().ToString('N'))
 $payload = Join-Path $stage 'WindowTab'

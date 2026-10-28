@@ -147,7 +147,7 @@ dotnet run --project .\WindowTab.csproj -- --settings
 Exit an existing tray instance before starting another build. To package the Windows x64 app with its runtime, setup guide and license notices:
 
 ```powershell
-.\tools\Package-Release.ps1 -Version 0.1.0
+.\tools\Package-Release.ps1
 ```
 
 The output is `dist/releases/WindowTab-win-x64.zip` and `SHA256SUMS.txt`. The GitHub Windows build workflow uses this same script.
