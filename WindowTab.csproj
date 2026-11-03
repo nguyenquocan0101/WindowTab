@@ -15,6 +15,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+    <InternalsVisibleTo Include="WindowTab.MotionChecks" />
     <EmbeddedResource Include="Assets\windowtab-logo.png" />
     <EmbeddedResource Include="Assets\windowtab.ico" />
   </ItemGroup>
