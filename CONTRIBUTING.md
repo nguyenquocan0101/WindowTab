@@ -27,9 +27,16 @@ Exit any existing tray instance before running another build, because the app in
 - Numeric fields, keyboard input and slider positions stay synchronized.
 - Navigation reaches both ends without wrapping, and Desktop remains opt-in.
 - The taskbar stays outside the overlay; activation failure does not leave the overlay stuck.
+- A floating window entering or leaving a full-size background animates above it; the background stays fixed.
 - New resources are embedded so the standalone executable works after extraction.
 
-The repository currently has no committed automated test suite. The Windows build workflow verifies that the distributable can be built and packaged. Include relevant manual/runtime evidence with UI or gesture changes; avoid claiming a frame-update rate proves display presentation FPS.
+Run the motion regression checks on Windows:
+
+```powershell
+dotnet run --project .\tests\MotionChecks\MotionChecks.csproj -c Release
+```
+
+These checks cover geometry and transition selection. The Windows build workflow verifies that the distributable can be built and packaged. Include relevant manual/runtime evidence for DWM composition, focus, UI, or gesture changes; avoid claiming a frame-update rate proves display presentation FPS.
 
 ## Prepare a release package
 
