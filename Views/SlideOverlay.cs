@@ -15,6 +15,7 @@ internal sealed class SlideOverlay : Form
     private IntPtr _incomingThumbnail;
     private Rectangle _outgoingHome;
     private Rectangle _incomingHome;
+    private TransitionMode _mode;
     private GestureDirection _direction;
     private int _durationMs;
     private Func<bool>? _beforeHide;
@@ -60,8 +61,21 @@ internal sealed class SlideOverlay : Form
             Screen.FromHandle(toWindow).DeviceName != Screen.FromHandle(fromWindow).DeviceName ||
             !TryGetWindowRect(toWindow, Bounds, out _incomingHome)) return false;
 
-        var outgoingResult = NativeMethods.DwmRegisterThumbnail(Handle, fromWindow, out _outgoingThumbnail);
-        var incomingResult = NativeMethods.DwmRegisterThumbnail(Handle, toWindow, out _incomingThumbnail);
+        _mode = TransitionMotion.SelectMode(_outgoingHome, _incomingHome, ClientSize,
+            (int)Math.Round(16d * DeviceDpi / 96));
+        int outgoingResult, incomingResult;
+        // Register the stationary background first so the floating preview stays above it.
+        if (_mode == TransitionMode.DismissWindow)
+        {
+            incomingResult = NativeMethods.DwmRegisterThumbnail(Handle, toWindow, out _incomingThumbnail);
+            outgoingResult = NativeMethods.DwmRegisterThumbnail(Handle, fromWindow, out _outgoingThumbnail);
+        }
+        else
+        {
+            outgoingResult = NativeMethods.DwmRegisterThumbnail(Handle, fromWindow, out _outgoingThumbnail);
+            incomingResult = NativeMethods.DwmRegisterThumbnail(Handle, toWindow, out _incomingThumbnail);
+        }
+        DiagnosticLog.Write($"Transition composition: mode={_mode}.");
         DiagnosticLog.Write($"Thumbnail register: outgoing=0x{outgoingResult:X8}, incoming=0x{incomingResult:X8}.");
         if (outgoingResult != 0 || incomingResult != 0)
         {
@@ -171,8 +185,8 @@ internal sealed class SlideOverlay : Form
             return UpdateThumbnail(_outgoingThumbnail,
                 TransitionMotion.Boundary(_outgoingHome, ClientSize.Width, _direction, progress));
 
-        var frame = TransitionMotion.Calculate(_outgoingHome, _incomingHome, ClientSize.Width, _direction,
-            _rollingBack ? 1 - progress : progress);
+        var frame = TransitionMotion.CalculateLayers(_outgoingHome, _incomingHome, ClientSize.Width, _direction,
+            _rollingBack ? 1 - progress : progress, _mode);
         var outgoingUpdated = UpdateThumbnail(_outgoingThumbnail, frame.Outgoing);
         var incomingUpdated = UpdateThumbnail(_incomingThumbnail, frame.Incoming);
         return outgoingUpdated && incomingUpdated;

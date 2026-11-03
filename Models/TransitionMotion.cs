@@ -4,10 +4,42 @@ namespace WindowTab.Models;
 
 internal readonly record struct TransitionFrame(Rectangle Outgoing, Rectangle Incoming);
 
+internal enum TransitionMode
+{
+    SlideBoth,
+    RevealWindow,
+    DismissWindow
+}
+
 internal static class TransitionMotion
 {
     internal const double PreviewScale = 0.84;
     internal const double EdgeTravel = 0.20;
+
+    public static TransitionMode SelectMode(Rectangle outgoing, Rectangle incoming, Size viewport, int edgeTolerance)
+    {
+        // Window frames may sit a few physical pixels inside/outside the work area.
+        bool CoversWorkArea(Rectangle rect) => rect.Left <= edgeTolerance && rect.Top <= edgeTolerance &&
+            rect.Right >= viewport.Width - edgeTolerance && rect.Bottom >= viewport.Height - edgeTolerance;
+
+        var outgoingFills = CoversWorkArea(outgoing);
+        var incomingFills = CoversWorkArea(incoming);
+        if (outgoingFills && !incomingFills) return TransitionMode.RevealWindow;
+        if (!outgoingFills && incomingFills) return TransitionMode.DismissWindow;
+        return TransitionMode.SlideBoth;
+    }
+
+    public static TransitionFrame CalculateLayers(Rectangle outgoing, Rectangle incoming, int viewportWidth,
+        GestureDirection direction, double progress, TransitionMode mode)
+    {
+        var frame = Calculate(outgoing, incoming, viewportWidth, direction, progress);
+        return mode switch
+        {
+            TransitionMode.RevealWindow => frame with { Outgoing = outgoing },
+            TransitionMode.DismissWindow => frame with { Incoming = incoming },
+            _ => frame
+        };
+    }
 
     public static TransitionFrame Calculate(Rectangle outgoing, Rectangle incoming, int viewportWidth,
         GestureDirection direction, double progress)
