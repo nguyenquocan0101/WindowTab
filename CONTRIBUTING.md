@@ -10,7 +10,7 @@ WindowTab started with a simple wish: make everyday window switching feel more d
 
 ## Build locally
 
-Use Windows 11 and the .NET 10 SDK:
+Use Windows 11, the .NET 10 SDK, and Visual Studio or Build Tools with the **Desktop development with C++** workload and Windows SDK.
 
 ```powershell
 git clone https://github.com/nguyenquocan0101/WindowTab.git
@@ -28,7 +28,8 @@ Exit any existing tray instance before running another build, because the app in
 - Navigation reaches both ends without wrapping, and Desktop remains opt-in.
 - The taskbar stays outside the overlay; activation failure does not leave the overlay stuck.
 - A floating window entering or leaving a full-size background animates above it; the background stays fixed.
-- New resources are embedded so the standalone executable works after extraction.
+- The release ZIP includes `WindowTab.Taskbar.dll` beside `WindowTab.exe`. Explorer keeps the native module loaded after the transparency is turned off. Restart Explorer before replacing a loaded DLL in place.
+- The taskbar transparency toggle restores the original background when turned off or when WindowTab exits.
 
 Run the motion regression checks on Windows:
 

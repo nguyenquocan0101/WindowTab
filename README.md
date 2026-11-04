@@ -135,7 +135,7 @@ Still not right? [Open an issue](https://github.com/nguyenquocan0101/WindowTab/i
 
 ## Build it yourself
 
-On Windows with the **.NET 10 SDK**:
+On Windows, use the **.NET 10 SDK** and the Visual Studio **Desktop development with C++** workload, including the Windows SDK.
 
 ```powershell
 git clone https://github.com/nguyenquocan0101/WindowTab.git

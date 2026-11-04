@@ -20,6 +20,12 @@ Gói tải sẵn đã kèm .NET runtime. Bạn không cần cài SDK hoặc tự
 
 Chỉ một phiên WindowTab chạy tại một thời điểm. Nếu mở file lần nữa mà không thấy cửa sổ mới, hãy dùng icon đang có ở khay hệ thống.
 
+### Taskbar trong suốt
+
+Trên Windows 11 22H2 trở lên (x64), vào **Cài đặt → Ứng dụng → Taskbar trong suốt** rồi bấm **Lưu thay đổi**. Bạn cũng có thể bật hoặc tắt nhanh từ menu khay hệ thống. Tùy chọn mặc định tắt. Khi bật, nền và đường viền trên của taskbar sẽ ẩn. Bỏ chọn hoặc thoát WindowTab để trả lại giao diện taskbar của Windows.
+
+Hãy thoát TranslucentTB trước khi bật. Nếu WindowTab báo Explorer vẫn giữ mô-đun của TranslucentTB hoặc của bản WindowTab cũ, khởi động lại Explorer hoặc đăng xuất rồi đăng nhập lại. Giữ `WindowTab.Taskbar.dll` cùng thư mục với `WindowTab.exe`.
+
 ## 2. Kiểm tra hai phím tắt
 
 Trong tab **Cử chỉ**, bản cài mới dùng:
