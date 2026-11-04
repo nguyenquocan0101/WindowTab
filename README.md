@@ -87,7 +87,7 @@ Existing users keep their saved bindings. Always match the shortcuts actually di
 |---|---|
 | **Cử chỉ · Gestures** | The two trigger shortcuts and access to Windows Touchpad settings. |
 | **Chuyển động · Motion** | Interactive preview, **100–600 ms** animation duration and **0–1000 ms** cooldown. |
-| **Ứng dụng · Application** | Windows startup, the optional Desktop entry and connection status. |
+| **Ứng dụng · Application** | Windows startup, the optional Desktop entry, taskbar transparency, Dock hover animation and connection status. |
 | **Hướng dẫn · Help** | Setup instructions inside the app. |
 
 For a quick, compact feel, try **220–300 ms** with a **100–150 ms** cooldown. For a slower transition that gives each stage more room, try **500–600 ms** with a **200–250 ms** cooldown. You can adjust these at any time; **Hủy** (Cancel) discards unsaved edits.

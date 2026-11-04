@@ -83,7 +83,7 @@ Ngay sau khi khởi chạy, cửa sổ hiện tại là đầu danh sách; vuố
 |---|---|
 | **Cử chỉ** | Đổi hai phím tắt, mở thiết lập touchpad của Windows. |
 | **Chuyển động** | Xem thử hiệu ứng; chỉnh thời lượng **100–600 ms**, chống lặp **0–1000 ms**. |
-| **Ứng dụng** | Bật chạy cùng Windows, chọn có thêm Desktop hay không, xem trạng thái kết nối. |
+| **Ứng dụng** | Bật chạy cùng Windows, thêm Desktop, chỉnh độ trong suốt và hiệu ứng Dock của thanh tác vụ, xem trạng thái kết nối. |
 | **Hướng dẫn** | Đọc cách thiết lập ngay trong app. |
 
 Thích phản hồi gọn? Thử **220–300 ms**, chống lặp **100–150 ms**. Muốn nhìn rõ từng giai đoạn? Thử **500–600 ms**, chống lặp **200–250 ms**. Bạn có thể đổi lại bất cứ lúc nào; **Hủy** bỏ chỉnh sửa chưa lưu.

@@ -66,11 +66,11 @@ internal sealed class TrayApplicationContext : ApplicationContext
         _notifyIcon.DoubleClick += (_, _) => OpenSettings();
         UpdateTrayText();
         _taskbarTransparency = new TaskbarTransparency(ReportTaskbarIssue);
-        if (_settings.TransparentTaskbar)
+        if (_settings.TransparentTaskbar || _settings.DockAnimation)
         {
             var taskbarError = TaskbarTransparency.CheckAvailability(checkRunningConflict: false);
             if (taskbarError is null)
-                _taskbarTransparency.SetEnabled(true);
+                ApplyTaskbarSetting();
             else
             {
                 ReportTaskbarIssue(taskbarError);
@@ -159,7 +159,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
     private void ApplyTaskbarSetting()
     {
-        _taskbarTransparency.SetEnabled(_settings.TransparentTaskbar);
+        _taskbarTransparency.SetEffects(_settings.TransparentTaskbar, _settings.DockAnimation ? _settings.DockScalePercent : 0);
         _transparentTaskbarMenu.Checked = _settings.TransparentTaskbar;
     }
 
@@ -171,8 +171,11 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
     private string? SaveSettings(AppSettings updated)
     {
-        var taskbarChanged = updated.TransparentTaskbar != _settings.TransparentTaskbar;
-        if (taskbarChanged && updated.TransparentTaskbar && TaskbarTransparency.CheckAvailability() is { } availabilityError)
+        var taskbarChanged = updated.TransparentTaskbar != _settings.TransparentTaskbar ||
+            updated.DockAnimation != _settings.DockAnimation ||
+            (updated.DockAnimation && updated.DockScalePercent != _settings.DockScalePercent);
+        if (taskbarChanged && (updated.TransparentTaskbar || updated.DockAnimation) &&
+            TaskbarTransparency.CheckAvailability() is { } availabilityError)
             return availabilityError;
 
         var previous = _settings.Clone();

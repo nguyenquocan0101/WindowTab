@@ -26,6 +26,10 @@ Trên Windows 11 22H2 trở lên (x64), vào **Cài đặt → Ứng dụng → 
 
 Hãy thoát TranslucentTB trước khi bật. Nếu WindowTab báo Explorer vẫn giữ mô-đun của TranslucentTB hoặc của bản WindowTab cũ, khởi động lại Explorer hoặc đăng xuất rồi đăng nhập lại. Giữ `WindowTab.Taskbar.dll` cùng thư mục với `WindowTab.exe`.
 
+### Hiệu ứng Dock
+
+Vào **Cài đặt → Ứng dụng → Hiệu ứng Dock**, bật **Phóng biểu tượng khi rê chuột** rồi chọn **Lưu thay đổi**. Mức phóng mặc định là **130%**, có thể chỉnh từ **100% đến 200%**. Khi chuột rời thanh tác vụ, biểu tượng trở về kích thước gốc. Biểu tượng có thể hơi mờ ở mức phóng cao. Hiệu ứng mặc định tắt và dùng cùng mô-đun Windows 11 x64 với tùy chọn trong suốt.
+
 ## 2. Kiểm tra hai phím tắt
 
 Trong tab **Cử chỉ**, bản cài mới dùng:
