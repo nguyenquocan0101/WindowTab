@@ -11,6 +11,7 @@ internal sealed class SettingsForm : Form
     private readonly SettingsNumber _animation = new();
     private readonly SettingsToggle _startWithWindows = new();
     private readonly SettingsToggle _includeDesktop = new();
+    private readonly SettingsToggle _transparentTaskbar = new();
     private readonly Label _message = new();
     private readonly Label _heading = new();
     private readonly Label _description = new();
@@ -103,8 +104,10 @@ internal sealed class SettingsForm : Form
         ConfigureCapture(_rightShortcut, _initial.SwipeRight);
         _startWithWindows.Checked = _initial.StartWithWindows;
         _includeDesktop.Checked = _initial.IncludeDesktop;
+        _transparentTaskbar.Checked = _initial.TransparentTaskbar;
         _startWithWindows.CheckedChanged += (_, _) => MarkChanged();
         _includeDesktop.CheckedChanged += (_, _) => MarkChanged();
+        _transparentTaskbar.CheckedChanged += (_, _) => MarkChanged();
         _animation.ValueChanged += (_, _) => MarkChanged();
         _cooldown.ValueChanged += (_, _) => MarkChanged();
         _initializing = false;
@@ -281,6 +284,8 @@ internal sealed class SettingsForm : Form
         behavior.Controls.Add(ToggleRow("Khởi động cùng Windows", "Tự chạy trong khay hệ thống khi bạn đăng nhập.", _startWithWindows));
         behavior.Controls.Add(Separator());
         behavior.Controls.Add(ToggleRow("Cho phép chuyển tới Desktop", "Thêm Desktop ở cuối danh sách. Khi tắt, bạn dừng ở cửa sổ ứng dụng cuối.", _includeDesktop));
+        behavior.Controls.Add(Separator());
+        behavior.Controls.Add(ToggleRow("Taskbar trong suốt", "Ẩn nền và đường viền trên của taskbar.", _transparentTaskbar));
         var edge = Card(content, "Khi chạm đầu hoặc cuối danh sách", "Cửa sổ di chuyển khoảng 20% rồi bật trở lại để báo đã tới biên. Danh sách không quay vòng.");
         edge.Controls.Add(TextLabel("Taskbar luôn nằm ngoài vùng chuyển cảnh.", SettingsTheme.Small, SettingsTheme.Muted, 0));
         var status = Card(content, "Trạng thái kết nối", null);
@@ -424,7 +429,8 @@ internal sealed class SettingsForm : Form
         var changed = left.Key != _initial.SwipeLeft.Key || left.Modifiers != _initial.SwipeLeft.Modifiers ||
             right.Key != _initial.SwipeRight.Key || right.Modifiers != _initial.SwipeRight.Modifiers ||
             _animation.Value != _initial.AnimationMs || _cooldown.Value != _initial.CooldownMs ||
-            _startWithWindows.Checked != _initial.StartWithWindows || _includeDesktop.Checked != _initial.IncludeDesktop;
+            _startWithWindows.Checked != _initial.StartWithWindows || _includeDesktop.Checked != _initial.IncludeDesktop ||
+            _transparentTaskbar.Checked != _initial.TransparentTaskbar;
         _saveButton.Enabled = changed;
         ShowMessage(changed ? "Có thay đổi chưa lưu." : "Thay đổi được áp dụng khi bạn lưu.");
     }
@@ -448,7 +454,8 @@ internal sealed class SettingsForm : Form
         var draft = new AppSettings
         {
             SwipeLeft = left.Clone(), SwipeRight = right.Clone(), CooldownMs = (int)_cooldown.Value,
-            AnimationMs = (int)_animation.Value, StartWithWindows = _startWithWindows.Checked, IncludeDesktop = _includeDesktop.Checked
+            AnimationMs = (int)_animation.Value, StartWithWindows = _startWithWindows.Checked, IncludeDesktop = _includeDesktop.Checked,
+            TransparentTaskbar = _transparentTaskbar.Checked
         };
         var error = _save(draft);
         if (error is not null) { ShowMessage(error, true); return; }

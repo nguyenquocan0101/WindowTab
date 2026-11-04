@@ -20,6 +20,8 @@ You need Windows 11 x64 and a touchpad driver that supports recording custom sho
 
 Open two or more non-minimized app windows on the same monitor. Swipe left for the next window, right for the previous one. The first window is a boundary, so the initial right swipe may rebound until you have advanced left.
 
+On Windows 11 22H2 or later (x64), open **Cài đặt → Ứng dụng**, switch on **Taskbar trong suốt**, and save. The tray menu also provides a quick toggle. This hides the background and top border. Turn it off or exit WindowTab to restore the Windows appearance. Exit TranslucentTB first. If Explorer still holds a TranslucentTB module or an older WindowTab module, restart Explorer or sign out and back in. Keep `WindowTab.Taskbar.dll` beside `WindowTab.exe`.
+
 ## Settings labels
 
 | Vietnamese | Meaning |

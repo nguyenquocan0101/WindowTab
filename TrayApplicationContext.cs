@@ -13,6 +13,8 @@ internal sealed class TrayApplicationContext : ApplicationContext
     private readonly WindowCycler _cycler;
     private readonly HotkeyService _hotkeys;
     private readonly NotifyIcon _notifyIcon;
+    private readonly TaskbarTransparency _taskbarTransparency;
+    private readonly ToolStripMenuItem _transparentTaskbarMenu;
     private AppSettings _settings;
     private SettingsForm? _settingsForm;
 
@@ -46,8 +48,11 @@ internal sealed class TrayApplicationContext : ApplicationContext
         };
         var exit = new ToolStripMenuItem("Thoát");
         exit.Click += (_, _) => ExitThread();
+        _transparentTaskbarMenu = new ToolStripMenuItem("Taskbar trong suốt") { Checked = _settings.TransparentTaskbar };
+        _transparentTaskbarMenu.Click += (_, _) => ToggleTransparentTaskbar();
         menu.Items.Add(openSettings);
         menu.Items.Add(pause);
+        menu.Items.Add(_transparentTaskbarMenu);
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add(exit);
 
@@ -60,6 +65,17 @@ internal sealed class TrayApplicationContext : ApplicationContext
         };
         _notifyIcon.DoubleClick += (_, _) => OpenSettings();
         UpdateTrayText();
+        _taskbarTransparency = new TaskbarTransparency(ReportTaskbarIssue);
+        if (_settings.TransparentTaskbar)
+        {
+            var taskbarError = TaskbarTransparency.CheckAvailability(checkRunningConflict: false);
+            if (taskbarError is null)
+                _taskbarTransparency.SetEnabled(true);
+            else
+            {
+                ReportTaskbarIssue(taskbarError);
+            }
+        }
 
         if (!registered)
         {
@@ -90,6 +106,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
         var hotkeysReady = _hotkeys.IsReady;
         _cycler.IsPaused = true;
         _hotkeys.Suspend();
+        _transparentTaskbarMenu.Enabled = false;
         DiagnosticLog.Write("Settings opened: gesture hotkeys suspended.");
         try
         {
@@ -105,6 +122,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
         finally
         {
             _settingsForm = null;
+            _transparentTaskbarMenu.Enabled = true;
             var registered = _hotkeys.TryConfigure(_settings.SwipeLeft, _settings.SwipeRight, out var error);
             if (!registered)
                 DiagnosticLog.Write($"Hotkey registration after settings failed: {error}");
@@ -114,8 +132,49 @@ internal sealed class TrayApplicationContext : ApplicationContext
         }
     }
 
+    private void ToggleTransparentTaskbar()
+    {
+        var enabled = !_settings.TransparentTaskbar;
+        if (enabled && TaskbarTransparency.CheckAvailability() is { } availabilityError)
+        {
+            ReportTaskbarIssue(availabilityError);
+            return;
+        }
+
+        var updated = _settings.Clone();
+        updated.TransparentTaskbar = enabled;
+        try
+        {
+            _settingsStore.Save(updated);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+        {
+            ReportTaskbarIssue($"Không ghi được cài đặt: {ex.Message}");
+            return;
+        }
+
+        _settings.TransparentTaskbar = enabled;
+        ApplyTaskbarSetting();
+    }
+
+    private void ApplyTaskbarSetting()
+    {
+        _taskbarTransparency.SetEnabled(_settings.TransparentTaskbar);
+        _transparentTaskbarMenu.Checked = _settings.TransparentTaskbar;
+    }
+
+    private void ReportTaskbarIssue(string message)
+    {
+        DiagnosticLog.Write(message);
+        _notifyIcon.ShowBalloonTip(5000, "WindowTab", message, ToolTipIcon.Warning);
+    }
+
     private string? SaveSettings(AppSettings updated)
     {
+        var taskbarChanged = updated.TransparentTaskbar != _settings.TransparentTaskbar;
+        if (taskbarChanged && updated.TransparentTaskbar && TaskbarTransparency.CheckAvailability() is { } availabilityError)
+            return availabilityError;
+
         var previous = _settings.Clone();
         if (!_hotkeys.TryConfigure(updated.SwipeLeft, updated.SwipeRight, out var hotkeyError))
         {
@@ -135,6 +194,8 @@ internal sealed class TrayApplicationContext : ApplicationContext
         }
 
         _settings = updated.Clone();
+        if (taskbarChanged)
+            ApplyTaskbarSetting();
         _cycler.UpdateSettings(_settings);
         UpdateTrayText();
         return null;
@@ -148,6 +209,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
     protected override void ExitThreadCore()
     {
+        _taskbarTransparency.Dispose();
         _notifyIcon.Visible = false;
         _notifyIcon.Dispose();
         _hotkeys.Dispose();

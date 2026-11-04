@@ -8,6 +8,7 @@ public sealed class AppSettings
     public int AnimationMs { get; set; } = 600;
     public bool StartWithWindows { get; set; }
     public bool IncludeDesktop { get; set; }
+    public bool TransparentTaskbar { get; set; }
 
     public AppSettings Clone() => new()
     {
@@ -16,7 +17,8 @@ public sealed class AppSettings
         CooldownMs = CooldownMs,
         AnimationMs = AnimationMs,
         StartWithWindows = StartWithWindows,
-        IncludeDesktop = IncludeDesktop
+        IncludeDesktop = IncludeDesktop,
+        TransparentTaskbar = TransparentTaskbar
     };
 
     public void Normalize()

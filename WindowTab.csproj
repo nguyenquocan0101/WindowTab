@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\windowtab.ico</ApplicationIcon>
-    <Version>0.1.2</Version>
+    <Version>0.1.3</Version>
     <Product>WindowTab</Product>
     <Description>Fluid three-finger window switching for Windows 11.</Description>
     <Authors>Nguyen Quoc An</Authors>
@@ -20,4 +20,26 @@
     <EmbeddedResource Include="Assets\windowtab-logo.png" />
     <EmbeddedResource Include="Assets\windowtab.ico" />
   </ItemGroup>
+  <Target Name="BuildTaskbarModule" BeforeTargets="CopyFilesToOutputDirectory"
+          Condition="'$(DesignTimeBuild)' != 'true'"
+          Inputs="Platform\Taskbar\TaskbarTransparency.cpp;tools\Build-Taskbar.ps1"
+          Outputs="$(IntermediateOutputPath)WindowTab.Taskbar.dll">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\tools\Build-Taskbar.ps1&quot; -OutputPath &quot;$(IntermediateOutputPath)WindowTab.Taskbar.dll&quot;" />
+  </Target>
+  <Target Name="CopyTaskbarModule" AfterTargets="CopyFilesToOutputDirectory" DependsOnTargets="BuildTaskbarModule"
+          Condition="'$(DesignTimeBuild)' != 'true'">
+    <Copy SourceFiles="$(IntermediateOutputPath)WindowTab.Taskbar.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <FileWrites Include="$(IntermediateOutputPath)WindowTab.Taskbar.*;$(IntermediateOutputPath)TaskbarTransparency.obj;$(OutDir)WindowTab.Taskbar.dll" />
+    </ItemGroup>
+  </Target>
+  <Target Name="PublishTaskbarModule" AfterTargets="ComputeFilesToPublish">
+    <ItemGroup>
+      <ResolvedFileToPublish Include="$(IntermediateOutputPath)WindowTab.Taskbar.dll">
+        <RelativePath>WindowTab.Taskbar.dll</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
 </Project>

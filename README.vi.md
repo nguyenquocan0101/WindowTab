@@ -125,7 +125,7 @@ Vẫn chưa đúng? [Mở một issue](https://github.com/nguyenquocan0101/Windo
 
 ## Dành cho người muốn tự build
 
-Trên Windows với **.NET 10 SDK**:
+Trên Windows, cần **.NET 10 SDK** và workload **Desktop development with C++** của Visual Studio, bao gồm Windows SDK.
 
 ```powershell
 git clone https://github.com/nguyenquocan0101/WindowTab.git
