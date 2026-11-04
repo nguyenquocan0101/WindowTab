@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO.MemoryMappedFiles;
 using System.Runtime.InteropServices;
 
 namespace WindowTab.Services;
@@ -16,6 +17,12 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
         @"Local\WindowTab.TaskbarTransparency.Enabled.2");
     private readonly EventWaitHandle _applied = new(false, EventResetMode.ManualReset,
         @"Local\WindowTab.TaskbarTransparency.Applied");
+    private readonly MemoryMappedFile _dockSettings = MemoryMappedFile.CreateNew(
+        @"Local\WindowTab.Taskbar.DockScale.6", sizeof(int));
+    private readonly EventWaitHandle _dockApplied = new(false, EventResetMode.ManualReset,
+        @"Local\WindowTab.Taskbar.DockApplied.6");
+    private bool _transparent;
+    private int _dockScale;
     private readonly System.Windows.Forms.Timer _timer = new() { Interval = 1000 };
     private Task<int>? _attachment;
     private uint _explorerPid;
@@ -29,27 +36,31 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
         if (RuntimeInformation.ProcessArchitecture != Architecture.X64 ||
             RuntimeInformation.OSArchitecture != Architecture.X64 ||
             !OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22621))
-            return "Cần Windows 11 22H2 trở lên trên máy x64 để làm trong suốt taskbar.";
+            return "Cần Windows 11 22H2 trở lên trên máy x64 để dùng hiệu ứng taskbar.";
 
         if (!File.Exists(Path.Combine(AppContext.BaseDirectory, ModuleName)))
-            return "Không tìm thấy mô-đun làm trong suốt taskbar của WindowTab.";
+            return "Không tìm thấy mô-đun hiệu ứng taskbar của WindowTab.";
 
         return checkRunningConflict && IsTranslucentTbRunning()
-            ? "Hãy thoát TranslucentTB trước khi bật taskbar trong suốt."
+            ? "Hãy thoát TranslucentTB trước khi bật hiệu ứng taskbar."
             : null;
     }
 
-    public void SetEnabled(bool enabled)
+    public void SetEffects(bool transparent, int dockScale)
     {
         _timer.Stop();
         _timer.Tick -= OnTick;
         _enabled.Reset();
         _reported = false;
         _attempts = 0;
-        if (!enabled)
+        _transparent = transparent;
+        _dockScale = dockScale;
+        PublishDockScale(0);
+        if (!transparent && dockScale == 0)
             return;
 
         _applied.Reset();
+        _dockApplied.Reset();
         _attemptStarted = Environment.TickCount64;
         if (_attachment is { IsCompletedSuccessfully: true } previous && previous.Result < 0)
             _explorerPid = 0;
@@ -63,6 +74,7 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
         if (IsTranslucentTbRunning())
         {
             _enabled.Reset();
+            PublishDockScale(0);
             if (!_conflict)
                 report("WindowTab đã tạm dừng hiệu ứng taskbar vì TranslucentTB đang chạy.");
             _conflict = true;
@@ -76,7 +88,9 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
             _reported = false;
         }
 
-        _enabled.Set();
+        if (_transparent)
+            _enabled.Set();
+        PublishDockScale(_dockScale);
         var taskbar = FindWindow("Shell_TrayWnd", null);
         if (taskbar == IntPtr.Zero || GetWindowThreadProcessId(taskbar, out var pid) == 0)
             return;
@@ -85,6 +99,7 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
         {
             _explorerPid = pid;
             _applied.Reset();
+            _dockApplied.Reset();
             _reported = false;
             _attempts = 0;
             StartAttachment(pid);
@@ -95,7 +110,8 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
             StartAttachment(pid);
         }
 
-        if (_reported || _applied.WaitOne(0))
+        if (_reported || ((!_transparent || _applied.WaitOne(0)) &&
+            (_dockScale <= 100 || _dockApplied.WaitOne(0))))
             return;
 
         if (_attachment is { IsCompletedSuccessfully: true } completed && completed.Result < 0)
@@ -114,7 +130,7 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
         else if (Environment.TickCount64 - _attemptStarted >= 10000)
         {
             _reported = true;
-            report("Windows chưa áp dụng được hiệu ứng trong suốt cho taskbar.");
+            report("Windows chưa áp dụng được hiệu ứng taskbar đã chọn.");
         }
     }
 
@@ -162,7 +178,7 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
             if (EventWaitHandle.TryOpenExisting(attachmentName, out var existing))
             {
                 existing.Dispose();
-                if (!EventWaitHandle.TryOpenExisting(attachmentName + ".2", out var version))
+                if (!EventWaitHandle.TryOpenExisting(attachmentName + ".6", out var version))
                     return ExplorerHasOldWindowTab;
                 version.Dispose();
                 return 0;
@@ -186,12 +202,21 @@ internal sealed class TaskbarTransparency(Action<string> report) : IDisposable
         }
     }
 
+    private void PublishDockScale(int scale)
+    {
+        using var view = _dockSettings.CreateViewAccessor(0, sizeof(int), MemoryMappedFileAccess.Write);
+        view.Write(0, scale);
+    }
+
     public void Dispose()
     {
         _timer.Dispose();
         _enabled.Reset();
         _enabled.Dispose();
         _applied.Dispose();
+        PublishDockScale(0);
+        _dockSettings.Dispose();
+        _dockApplied.Dispose();
     }
 
     [DllImport("Windows.UI.Xaml.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]

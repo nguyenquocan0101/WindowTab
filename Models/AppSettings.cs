@@ -10,6 +10,11 @@ public sealed class AppSettings
     public bool IncludeDesktop { get; set; }
     public bool TransparentTaskbar { get; set; }
 
+    public const int MinDockScale = 100;
+    public const int MaxDockScale = 200;
+    public bool DockAnimation { get; set; }
+    public int DockScalePercent { get; set; } = 130;
+
     public AppSettings Clone() => new()
     {
         SwipeLeft = SwipeLeft.Clone(),
@@ -18,7 +23,9 @@ public sealed class AppSettings
         AnimationMs = AnimationMs,
         StartWithWindows = StartWithWindows,
         IncludeDesktop = IncludeDesktop,
-        TransparentTaskbar = TransparentTaskbar
+        TransparentTaskbar = TransparentTaskbar,
+        DockAnimation = DockAnimation,
+        DockScalePercent = DockScalePercent
     };
 
     public void Normalize()
@@ -27,5 +34,6 @@ public sealed class AppSettings
         if (SwipeRight is null || !SwipeRight.IsValid) SwipeRight = HotkeyBinding.CreateDefaultRight();
         CooldownMs = Math.Clamp(CooldownMs, 0, 1000);
         AnimationMs = Math.Clamp(AnimationMs, 100, 600);
+        DockScalePercent = Math.Clamp(DockScalePercent, MinDockScale, MaxDockScale);
     }
 }

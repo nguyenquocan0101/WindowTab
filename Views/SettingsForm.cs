@@ -12,6 +12,8 @@ internal sealed class SettingsForm : Form
     private readonly SettingsToggle _startWithWindows = new();
     private readonly SettingsToggle _includeDesktop = new();
     private readonly SettingsToggle _transparentTaskbar = new();
+    private readonly SettingsToggle _dockAnimation = new();
+    private readonly SettingsNumber _dockScale = new();
     private readonly Label _message = new();
     private readonly Label _heading = new();
     private readonly Label _description = new();
@@ -107,6 +109,8 @@ internal sealed class SettingsForm : Form
         _transparentTaskbar.Checked = _initial.TransparentTaskbar;
         _startWithWindows.CheckedChanged += (_, _) => MarkChanged();
         _includeDesktop.CheckedChanged += (_, _) => MarkChanged();
+        _dockAnimation.CheckedChanged += (_, _) => MarkChanged();
+        _dockScale.ValueChanged += (_, _) => MarkChanged();
         _transparentTaskbar.CheckedChanged += (_, _) => MarkChanged();
         _animation.ValueChanged += (_, _) => MarkChanged();
         _cooldown.ValueChanged += (_, _) => MarkChanged();
@@ -243,7 +247,7 @@ internal sealed class SettingsForm : Form
         return page;
     }
 
-    private Control TimingInput(string title, NumericUpDown number, int value, int min, int max, int step)
+    private Control TimingInput(string title, NumericUpDown number, int value, int min, int max, int step, string unitText = "ms")
     {
         var row = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 2, RowCount = 2, Margin = new Padding(0, 8, 0, 0) };
         row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -255,13 +259,13 @@ internal sealed class SettingsForm : Form
         number.Font = SettingsTheme.Strong; number.BorderStyle = BorderStyle.None;
         number.BackColor = SettingsTheme.Field; number.ForeColor = SettingsTheme.Ink;
         number.Dock = DockStyle.None; number.Anchor = AnchorStyles.Left | AnchorStyles.Right; number.Margin = Padding.Empty;
-        number.AccessibleName = title + " (mili giây)";
+        number.AccessibleName = title + (unitText == "ms" ? " (mili giây)" : " (phần trăm)");
         var field = new SurfacePanel { Height = 40, Dock = DockStyle.Top, BackColor = SettingsTheme.Field, Padding = new Padding(12, 8, 12, 8), Margin = Padding.Empty };
         var editor = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty, BackColor = SettingsTheme.Field };
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 28));
         editor.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        var unit = TextLabel("ms", SettingsTheme.Small, SettingsTheme.Muted, 0);
+        var unit = TextLabel(unitText, SettingsTheme.Small, SettingsTheme.Muted, 0);
         unit.Dock = DockStyle.Fill; unit.TextAlign = ContentAlignment.MiddleRight;
         editor.Controls.Add(number, 0, 0); editor.Controls.Add(unit, 1, 0); field.Controls.Add(editor);
         number.Enter += (_, _) => { field.FocusAccent = true; field.Invalidate(); };
@@ -286,6 +290,14 @@ internal sealed class SettingsForm : Form
         behavior.Controls.Add(ToggleRow("Cho phép chuyển tới Desktop", "Thêm Desktop ở cuối danh sách. Khi tắt, bạn dừng ở cửa sổ ứng dụng cuối.", _includeDesktop));
         behavior.Controls.Add(Separator());
         behavior.Controls.Add(ToggleRow("Taskbar trong suốt", "Ẩn nền và đường viền trên của taskbar.", _transparentTaskbar));
+        var dock = Card(content, "Hiệu ứng Dock", null);
+        _dockAnimation.Checked = _initial.DockAnimation;
+        dock.Controls.Add(ToggleRow("Phóng biểu tượng khi rê chuột", "Biểu tượng trở về kích thước gốc khi chuột rời thanh tác vụ.", _dockAnimation));
+        var scaleInput = TimingInput("Mức phóng tối đa", _dockScale, _initial.DockScalePercent,
+            AppSettings.MinDockScale, AppSettings.MaxDockScale, 5, "%");
+        scaleInput.Enabled = _dockAnimation.Checked;
+        _dockAnimation.CheckedChanged += (_, _) => scaleInput.Enabled = _dockAnimation.Checked;
+        dock.Controls.Add(scaleInput);
         var edge = Card(content, "Khi chạm đầu hoặc cuối danh sách", "Cửa sổ di chuyển khoảng 20% rồi bật trở lại để báo đã tới biên. Danh sách không quay vòng.");
         edge.Controls.Add(TextLabel("Taskbar luôn nằm ngoài vùng chuyển cảnh.", SettingsTheme.Small, SettingsTheme.Muted, 0));
         var status = Card(content, "Trạng thái kết nối", null);
@@ -430,7 +442,8 @@ internal sealed class SettingsForm : Form
             right.Key != _initial.SwipeRight.Key || right.Modifiers != _initial.SwipeRight.Modifiers ||
             _animation.Value != _initial.AnimationMs || _cooldown.Value != _initial.CooldownMs ||
             _startWithWindows.Checked != _initial.StartWithWindows || _includeDesktop.Checked != _initial.IncludeDesktop ||
-            _transparentTaskbar.Checked != _initial.TransparentTaskbar;
+            _transparentTaskbar.Checked != _initial.TransparentTaskbar ||
+            _dockAnimation.Checked != _initial.DockAnimation || (int)_dockScale.Value != _initial.DockScalePercent;
         _saveButton.Enabled = changed;
         ShowMessage(changed ? "Có thay đổi chưa lưu." : "Thay đổi được áp dụng khi bạn lưu.");
     }
@@ -455,7 +468,9 @@ internal sealed class SettingsForm : Form
         {
             SwipeLeft = left.Clone(), SwipeRight = right.Clone(), CooldownMs = (int)_cooldown.Value,
             AnimationMs = (int)_animation.Value, StartWithWindows = _startWithWindows.Checked, IncludeDesktop = _includeDesktop.Checked,
-            TransparentTaskbar = _transparentTaskbar.Checked
+            TransparentTaskbar = _transparentTaskbar.Checked,
+            DockAnimation = _dockAnimation.Checked,
+            DockScalePercent = (int)_dockScale.Value
         };
         var error = _save(draft);
         if (error is not null) { ShowMessage(error, true); return; }
